@@ -1,0 +1,43 @@
+.searchCard {
+   padding-top: 20px;
+}
+
+.search-result {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.search-result th {
+  text-align: left;
+  line-height: 22px;
+}
+
+.search-result tr:nth-child(2n) {
+    background-color: #f9f9f9;
+}
+
+.search-result td {
+    padding: 5px 5px 5px 10px;
+}
+
+.search-result td.code {
+  width: 30%;
+}
+
+.search-result td.name {
+  width: 50%;
+}
+
+ md-input {
+   margin-left: 10px;
+   margin-right: 10px;
+}
+
+ span.highlighted {
+   font-weight: bold;
+   color: darkblue;
+ }
+
+ .linksHeader span, .linksHeader md-tab {
+     float: left;
+ }

@@ -1,0 +1,68 @@
+.path .node {
+    cursor: pointer;
+    color: #039be5;
+}
+
+.path .node:hover {
+    color: #336699;
+}
+
+.path {
+    margin-top: 20px;
+    font-size: 9pt
+}
+
+.path a {
+    margin: 0;
+    width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.path .material-icons {
+    font-size: 9pt;
+}
+
+.path md-icon {
+    width: 15px;
+    height: inherit;
+}
+
+.path .code {
+    font-weight: bold
+}
+
+.detailed {
+    position: relative;
+    padding-left: 20px;
+}
+
+.linksWrapper {
+    position: relative;
+}
+
+#linkIcon {
+    position: absolute;
+    top: 0;
+    left: 60px;
+    color: #444;
+}
+
+h3 {
+    margin-bottom: 0.5em;
+}
+
+
+    /** ?? **/
+.tree {
+    position:  relative;
+}
+
+
+.backspace {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    color: #555;
+}

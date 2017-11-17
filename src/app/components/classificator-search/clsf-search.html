@@ -1,0 +1,30 @@
+<div class="searchCard" *ngIf="clsf">
+  Поиск по {{clsf.name}}
+  <md-input [(ngModel)]="query" placeholder="Полнотекстовый поиск"></md-input>
+  <button md-button (click)="search()">Искать</button>
+
+  <div class="search-result-wrapper" *ngIf="searchResult">
+    <table class="search-result" *ngIf="searchResult.length > 0">
+      <tr>
+        <th>Код</th>
+        <th>Наименование</th>
+        <th class="linksHeader"><span>Связи</span>&nbsp;<md-icon>link</md-icon></th>
+      </tr>
+      <tr *ngFor="let item of searchResult">
+        <td class="code">{{item.code}}</td>
+        <td class="name"><span [innerHTML]="highlight(item.name)"></span></td>
+        <td class="links">
+          <div *ngFor="let links of item.links | mapIterable" class="section">
+            <div class="title">{{links.key}}:</div>
+            <span *ngFor="let link of links.val" class="link">
+               <a [routerLink]="['/tree', links.key, link.code]">{{link.code}}</a>
+              <span class="name">{{link.name}}</span>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <span  *ngIf="searchResult.length == 0">Ничего не найдено</span>
+  </div>
+  <div class="loading" *ngIf="searching"></div>
+</div>

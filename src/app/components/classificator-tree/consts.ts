@@ -1,0 +1,1 @@
+export const EVENT_NODE_EXPAND = "nodeExpand";
