@@ -1,0 +1,16 @@
+<li class="list-group-item node-treeview4" (click)="toggleTreeNode()">
+  <span class="indent-{{level}}"></span>
+  <span [ngClass]="{
+    'fa': true,
+    'fa-chevron-down': classificator.hasChildren && classificator.expanded,
+    'fa-chevron-right': classificator.hasChildren && !classificator.expanded,
+    'node-icon': true
+  }"></span>
+  {{classificator.name}}
+</li>
+<div *ngIf="classificator.expanded">
+  <clsf-classificator-tree-node *ngFor="let node of classificator?.children"
+                                [classificator]="node"
+                                [level]="level + 1">
+  </clsf-classificator-tree-node>
+</div>

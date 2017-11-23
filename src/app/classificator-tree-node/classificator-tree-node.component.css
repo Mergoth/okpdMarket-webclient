@@ -1,0 +1,47 @@
+/* Indents */
+
+.indent-0, .indent-1, .indent-2, .indent-3, .indent-4, .indent-5 {
+  display: inline-block;
+}
+
+.indent-1 {
+  width: 20px;
+}
+
+.indent-2 {
+  width: 40px;
+}
+
+.indent-3 {
+  width: 60px;
+}
+
+.indent-4 {
+  width: 80px;
+}
+
+.indent-5 {
+  width: 100px;
+}
+
+/* Nodes */
+
+.node-icon {
+  width: 20px;
+  display: inline-block;
+}
+
+.list-group-item:hover {
+  color: #4cacca;
+}
+
+.list-group-item {
+  cursor: pointer;
+  padding-top: 0.55em;
+  padding-bottom: 0.55em;
+  border-radius: 0;
+}
+
+.list-group-item:last-child {
+  margin-bottom: -1px;
+}
