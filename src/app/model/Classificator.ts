@@ -4,4 +4,5 @@ export interface Classificator {
   hasChildren: boolean;
   expanded?: boolean;
   children?: Classificator[];
+  childrenCount?: number;
 }
