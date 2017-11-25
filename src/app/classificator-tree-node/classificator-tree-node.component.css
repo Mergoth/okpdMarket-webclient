@@ -28,6 +28,8 @@
 
 .node-icon {
   width: 20px;
+  height: 20px;
+  text-align: center;
   display: inline-block;
 }
 
@@ -44,4 +46,8 @@
 
 .list-group-item:last-child {
   margin-bottom: -1px;
+}
+
+.fa.rotated {
+  transform: rotate(90deg);
 }

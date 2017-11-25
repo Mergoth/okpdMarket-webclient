@@ -1,9 +1,10 @@
 <li class="list-group-item node-treeview4" (click)="toggleTreeNode()">
   <span class="indent-{{level}}"></span>
-  <span [ngClass]="{
+  <span
+    [@expanded]="classificator.expanded"
+    [ngClass]="{
     'fa': true,
-    'fa-chevron-down': classificator.hasChildren && classificator.expanded,
-    'fa-chevron-right': classificator.hasChildren && !classificator.expanded,
+    'fa-chevron-right': classificator.hasChildren,
     'node-icon': true
   }"></span>
   {{classificator.name}}

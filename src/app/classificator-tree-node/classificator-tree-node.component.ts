@@ -2,10 +2,22 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Classificator} from '../model/Classificator';
 import {EventService} from '../service/event.service';
 import {ClassificatorService} from '../service/classificator.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'clsf-classificator-tree-node',
   templateUrl: './classificator-tree-node.component.html',
+  animations: [
+    trigger('expanded', [
+      state('true', style({
+        'transform': 'rotate(90deg)'
+      })),
+      state('false', style({
+        'transform': 'rotate(0)'
+      })),
+      transition('* => *', animate('.2s'))
+    ])
+  ],
   styleUrls: ['./classificator-tree-node.component.css']
 })
 export class ClassificatorTreeNodeComponent implements OnInit {
