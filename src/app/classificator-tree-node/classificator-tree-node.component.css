@@ -51,3 +51,8 @@
 .fa.rotated {
   transform: rotate(90deg);
 }
+
+.in-progress {
+  cursor: wait;
+  color: #d3d3d3 !important;
+}

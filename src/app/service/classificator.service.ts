@@ -1,24 +1,16 @@
 import {Injectable} from '@angular/core';
-import {Classificator} from "../model/Classificator";
+import {Classificator} from '../model/Classificator';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class ClassificatorService {
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
   }
 
-  getChildren(parentId: number): Classificator[] {
-    const result = [];
-    for (let _i = 1; _i < 6; _i++) {
-
-      const id = parentId * 10 + _i;
-      result.push({
-        id: id,
-        name: `Child ${id}`,
-        hasChildren: parentId < 10000
-      });
-    }
-
-    return result;
+  getChildren(parentId: number): Observable<Classificator[]> {
+    return this.httpClient.get<Classificator[]>(`classificator/${parentId}/children`);
   }
 }

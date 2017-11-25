@@ -1,3 +1,5 @@
+import {Observable} from 'rxjs/Observable';
+
 export interface Classificator {
   id: number;
   name: string;

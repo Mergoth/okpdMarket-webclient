@@ -1,11 +1,18 @@
-<li class="list-group-item node-treeview4" (click)="toggleTreeNode()">
+<li
+  [ngClass]="{
+  'list-group-item': true,
+   'node-treeview4': true,
+   'in-progress': gettingChildrenInProgress
+  }"
+  (click)="toggleTreeNode()">
   <span class="indent-{{level}}"></span>
   <span
     [@expanded]="classificator.expanded"
     [ngClass]="{
     'fa': true,
-    'fa-chevron-right': classificator.hasChildren,
-    'node-icon': true
+    'node-icon': !gettingChildrenInProgress,
+    'fa-chevron-right': !gettingChildrenInProgress && classificator.hasChildren,
+    'fa-circle-o-notch fa-spin fa-fw': gettingChildrenInProgress
   }"></span>
   {{classificator.name}}
 </li>
