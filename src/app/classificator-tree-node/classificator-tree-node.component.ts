@@ -38,15 +38,14 @@ export class ClassificatorTreeNodeComponent implements OnInit {
   }
 
   toggleTreeNode() {
-    if (this.gettingChildrenInProgress)
-      return;
-
-    if (!this.classificator.hasChildren)
+    if (this.gettingChildrenInProgress || !this.classificator.hasChildren)
       return;
 
     const wasExpanded = this.classificator.expanded;
 
-    if (!wasExpanded) {
+    if (wasExpanded) {
+      this.classificator.expanded = !wasExpanded;
+    } else {
       this.gettingChildrenInProgress = true;
       this.classificatorService.getChildren(this.classificator.id)
         .mergeMap(it => it)
@@ -62,8 +61,6 @@ export class ClassificatorTreeNodeComponent implements OnInit {
           this.classificator.expanded = !wasExpanded;
           this.gettingChildrenInProgress = false;
         });
-    } else {
-      this.classificator.expanded = !wasExpanded;
     }
   }
 }
