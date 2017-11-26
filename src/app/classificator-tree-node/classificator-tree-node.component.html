@@ -5,7 +5,7 @@
    'in-progress': gettingChildrenInProgress
   }"
   (click)="toggleTreeNode()">
-  <span class="indent-{{level}}"></span>
+  <span class="indent-{{classificator.level}}"></span>
   <span
     [@expanded]="classificator.expanded"
     [ngClass]="{
@@ -18,7 +18,6 @@
 </li>
 <div *ngIf="classificator.expanded">
   <clsf-classificator-tree-node *ngFor="let node of classificator?.children"
-                                [classificator]="node"
-                                [level]="level + 1">
+                                [classificator]="node">
   </clsf-classificator-tree-node>
 </div>

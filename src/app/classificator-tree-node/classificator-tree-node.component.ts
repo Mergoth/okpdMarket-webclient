@@ -25,15 +25,12 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class ClassificatorTreeNodeComponent implements OnInit {
   @Input() classificator: Classificator;
-  @Input() level: number;
   gettingChildrenInProgress = false;
-
 
   constructor(private classificatorService: ClassificatorService) {
   }
 
   ngOnInit() {
-
   }
 
   toggleTreeNode() {
@@ -47,6 +44,18 @@ export class ClassificatorTreeNodeComponent implements OnInit {
     } else {
       this.gettingChildrenInProgress = true;
       this.classificatorService.getChildren(this.classificator.id)
+        .mergeMap(it => it)
+        .map(classificator => {
+          return {
+            id: classificator.id,
+            name: classificator.name,
+            level: this.classificator.level + 1,
+            expanded: false,
+            hasChildren: classificator.hasChildren,
+            parent: this.classificator
+          };
+        })
+        .toArray()
         .subscribe(classificators => {
           this.classificator.children = classificators;
           this.classificator.expanded = !wasExpanded;

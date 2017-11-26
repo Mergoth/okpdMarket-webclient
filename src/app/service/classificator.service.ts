@@ -12,14 +12,6 @@ export class ClassificatorService {
   }
 
   getChildren(parentId: number): Observable<Classificator[]> {
-    return this.httpClient.get<Classificator[]>(`classificator/${parentId}/children`)
-      .mergeMap(it => it)
-      .map(it => {
-        return {
-          id: it.id, name: it.name,
-          expanded: false, hasChildren: it.hasChildren
-        };
-      })
-      .toArray();
+    return this.httpClient.get<Classificator[]>(`classificator/${parentId}/children`);
   }
 }

@@ -15,6 +15,17 @@ export class ClassificatorTreeComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getChildren(0)
+      .mergeMap(it => it)
+      .map(it => {
+        return {
+          id: it.id,
+          name: it.name,
+          level: 0,
+          expanded: false,
+          hasChildren: it.hasChildren
+        };
+      })
+      .toArray()
       .subscribe(classificators => {
         this.classificators = classificators;
       });
