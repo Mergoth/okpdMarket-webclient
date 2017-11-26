@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ClassificatorService} from '../service/classificator.service';
 import {Classificator} from '../model/Classificator';
 
@@ -7,22 +7,16 @@ import {Classificator} from '../model/Classificator';
   templateUrl: './classificator-tree.component.html',
   styleUrls: ['./classificator-tree.component.css']
 })
-export class ClassificatorTreeComponent {
-  classificators: Classificator[] = [
-    {
-      id: 1,
-      name: 'First Parent',
-      expanded: false,
-      hasChildren: true
-    }, {
-      id: 2,
-      name: 'Second Parent',
-      expanded: false,
-      hasChildren: true,
-    }
-  ];
+export class ClassificatorTreeComponent implements OnInit {
+  classificators: Classificator[];
 
   constructor(private service: ClassificatorService) {
+  }
 
+  ngOnInit(): void {
+    this.service.getChildren(0)
+      .subscribe(classificators => {
+        this.classificators = classificators;
+      });
   }
 }

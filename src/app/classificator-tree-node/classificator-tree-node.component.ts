@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Classificator} from '../model/Classificator';
-import {EventService} from '../service/event.service';
 import {ClassificatorService} from '../service/classificator.service';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
@@ -48,14 +47,6 @@ export class ClassificatorTreeNodeComponent implements OnInit {
     } else {
       this.gettingChildrenInProgress = true;
       this.classificatorService.getChildren(this.classificator.id)
-        .mergeMap(it => it)
-        .map(it => {
-          return {
-            id: it.id, name: it.name,
-            expanded: false, hasChildren: it.hasChildren
-          };
-        })
-        .toArray()
         .subscribe(classificators => {
           this.classificator.children = classificators;
           this.classificator.expanded = !wasExpanded;
