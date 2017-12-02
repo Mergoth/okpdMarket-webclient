@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {Classificator} from '../model/Classificator';
 import {ClassificatorService} from '../service/classificator.service';
 import 'rxjs/add/operator/mergeMap';
@@ -6,6 +6,10 @@ import 'rxjs/add/operator/toArray';
 
 
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {EventService} from '../service/event.service';
+import {Actions} from '../service/Actions';
+import {Observable} from 'rxjs/Observable';
+import {ClassificatorDetailInfo} from '../model/ClassificatorDetailInfo';
 
 @Component({
   selector: 'clsf-classificator-tree-node',
@@ -26,8 +30,11 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class ClassificatorTreeNodeComponent implements OnInit {
   @Input() classificator: Classificator;
   gettingChildrenInProgress = false;
+  @Input() withDetailInfo?: boolean;
+  @Output() detailInfo: Observable<ClassificatorDetailInfo>;
 
-  constructor(private classificatorService: ClassificatorService) {
+  constructor(private classificatorService: ClassificatorService,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -61,6 +68,19 @@ export class ClassificatorTreeNodeComponent implements OnInit {
           this.classificator.expanded = !wasExpanded;
           this.gettingChildrenInProgress = false;
         });
+
+      this.eventService.publish(Actions.ROW_EXPANDED, this.classificator);
     }
+  }
+
+  showDetailInfo($event) {
+    $event.stopPropagation();
+    this.detailInfo = this.classificatorService.getDetailInfo(this.classificator.id);
+    this.withDetailInfo = true;
+  }
+
+  closeDetailInfo($event: Event) {
+    $event.stopPropagation();
+    this.withDetailInfo = false;
   }
 }

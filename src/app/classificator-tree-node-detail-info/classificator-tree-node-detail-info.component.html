@@ -1,0 +1,27 @@
+<div *ngIf="detailInfo == null" class="loading">
+  Loading...
+</div>
+
+<div *ngIf="detailInfo != null" class="detail-info">
+  <hr/>
+  <div>
+    <span class="code">{{detailInfo.code}}</span>
+    <span class="name">{{detailInfo.name}}</span>
+  </div>
+  <div>
+    <span class="description">Some very informative description</span>
+  </div>
+  <div class="links">
+    <div class="category-links">
+      <div *ngFor="let linkCategory of detailInfo.links">
+        <span class="category-name">{{linkCategory.name}}:</span>
+        <ul class="links">
+          <li *ngFor="let link of linkCategory.links">
+            <span class="link-code">{{link.code}}</span>
+            <a href="#" class="link-name">{{link.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

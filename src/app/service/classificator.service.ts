@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
+import {ClassificatorDetailInfo} from "../model/ClassificatorDetailInfo";
 
 @Injectable()
 export class ClassificatorService {
@@ -13,5 +14,9 @@ export class ClassificatorService {
 
   getChildren(parentId: number): Observable<Classificator[]> {
     return this.httpClient.get<Classificator[]>(`classificator/${parentId}/children`);
+  }
+
+  getDetailInfo(code: number): Observable<ClassificatorDetailInfo> {
+    return this.httpClient.get<ClassificatorDetailInfo>(`classificator/${code}/detailInfo`);
   }
 }

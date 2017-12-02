@@ -38,7 +38,6 @@
 }
 
 .list-group-item {
-  cursor: pointer;
   padding-top: 0.55em;
   padding-bottom: 0.55em;
   border-radius: 0;
@@ -55,4 +54,27 @@
 .in-progress {
   cursor: wait;
   color: #d3d3d3 !important;
+}
+
+
+.list-group-item .btn-details {
+  margin-left: 70px;
+  font-size: 13px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  cursor: pointer;
+  display: none;
+}
+
+.list-group-item:hover .btn-details {
+  display: inline-block;
+  opacity: 0.3;
+}
+
+.list-group-item:hover .btn-details:hover {
+  opacity: 1.0;
+}
+
+.general-info-row {
+  cursor: pointer;
 }
