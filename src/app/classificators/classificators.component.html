@@ -1,9 +1,13 @@
 <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+  <li *ngFor="let classificator of classificators" class="nav-item">
+    <a [ngClass]="{
+    'classificator': true,
+    'nav-link': true,
+    'active': activeClassificatorCode === classificator.code
+    }" href="#"
+    (click)="selectClassificator(classificator.code)">
+      {{classificator.code}}
+    </a>
   </li>
 </ul>
-<clsf-classificator-tree></clsf-classificator-tree>
+<clsf-classificator-tree [classificatorCode]="activeClassificatorCode"></clsf-classificator-tree>

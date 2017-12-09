@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ClassificatorService} from '../service/classificator.service';
-import {Classificator} from '../model/Classificator';
+import {Element} from '../model/Element';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import _ from 'lodash/array';
@@ -8,29 +8,47 @@ import _ from 'lodash/array';
 @Component({
   selector: 'clsf-classificator-tree',
   templateUrl: './classificator-tree.component.html',
-  styleUrls: ['./classificator-tree.component.css']
+  styleUrls: ['./classificator-tree.component.scss']
 })
 export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   static MAX_NESTING_LEVEL = 4;
 
-  highLevelParents: { id: number, name: string }[] = [{id: 0, name: 'Root'}];
-  classificators: Classificator[];
+  @Input() classificatorCode: string;
+  highLevelParents: { id: number, name: string }[];
+  elements: Element[];
 
   constructor(private service: ClassificatorService,
               private eventService: EventService) {
   }
 
   ngOnInit(): void {
-    this.initRootClassificators();
-    this.subscribeToInsterestedEvents();
+    this.resetRootParent();
+    this.eventService.subscribeFor(
+      'ClassificatorTreeComponent',
+      Actions.CLASSIFICATOR_SELECTED,
+      classificatorCode => {
+        this.resetRootParent();
+        this.classificatorCode = classificatorCode;
+        this.loadChildren(0);
+      }
+    );
+
+    this.eventService.subscribeFor(
+      'ClassificatorTreeComponent',
+      Actions.ROW_EXPANDED,
+      data => {
+        const classificator = data as Element;
+        if (classificator.level >= ClassificatorTreeComponent.MAX_NESTING_LEVEL) {
+          const futureRoot = this.findFutureRootClassificatorFrom(classificator);
+          this.decrementLevelsIn(futureRoot.children);
+          this.elements = futureRoot.children;
+          this.highLevelParents.push({id: futureRoot.id, name: futureRoot.name});
+        }
+      });
   }
 
-  private initRootClassificators() {
-    this.initializeRootClassificators(0);
-  }
-
-  private initializeRootClassificators(parentId: number) {
-    this.service.getChildren(parentId)
+  private loadChildren(parentCode: number) {
+    this.service.getElementChildren(this.classificatorCode, parentCode)
       .mergeMap(it => it)
       .map(it => {
         return {
@@ -42,27 +60,12 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
         };
       })
       .toArray()
-      .subscribe(classificators => {
-        this.classificators = classificators;
+      .subscribe(elements => {
+        this.elements = elements;
       });
   }
 
-  private subscribeToInsterestedEvents() {
-    this.eventService.subscribeFor(
-      `ClassificatorTreeComponent`,
-      Actions.ROW_EXPANDED,
-      data => {
-        const classificator = data as Classificator;
-        if (classificator.level >= ClassificatorTreeComponent.MAX_NESTING_LEVEL) {
-          const futureRoot = this.findFutureRootClassificatorFrom(classificator);
-          this.decrementLevelsIn(futureRoot.children);
-          this.classificators = futureRoot.children;
-          this.highLevelParents.push({id: futureRoot.id, name: futureRoot.name});
-        }
-      });
-  }
-
-  private decrementLevelsIn(classificators: Classificator[]) {
+  private decrementLevelsIn(classificators: Element[]) {
     for (const classificator of classificators) {
       classificator.level--;
 
@@ -71,7 +74,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private findFutureRootClassificatorFrom(classificator: Classificator): Classificator {
+  private findFutureRootClassificatorFrom(classificator: Element): Element {
     let tempClassificator = classificator;
     for (let _i = 0; _i < ClassificatorTreeComponent.MAX_NESTING_LEVEL; _i++)
       tempClassificator = tempClassificator.parent;
@@ -79,9 +82,13 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   }
 
   moveToParent(id) {
-    this.initializeRootClassificators(id);
+    this.loadChildren(id);
     const index = _.findIndex(this.highLevelParents, it => it.id === id);
     this.highLevelParents = _.slice(this.highLevelParents, 0, index + 1);
+  }
+
+  private resetRootParent() {
+    this.highLevelParents = [{id: 0, name: 'Root'}];
   }
 
   ngOnDestroy(): void {

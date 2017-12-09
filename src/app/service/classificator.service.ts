@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Classificator} from '../model/Classificator';
+import {Element} from '../model/Element';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
-import {ClassificatorDetailInfo} from "../model/ClassificatorDetailInfo";
+import {ElementDetailInfo} from '../model/ElementDetailInfo';
+import {Classificator} from '../model/Classificator';
 
 @Injectable()
 export class ClassificatorService {
@@ -12,11 +13,15 @@ export class ClassificatorService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getChildren(parentId: number): Observable<Classificator[]> {
-    return this.httpClient.get<Classificator[]>(`classificator/${parentId}/children`);
+  getClassificators(): Observable<Classificator[]> {
+    return this.httpClient.get<Classificator[]>(`classificator/all`);
   }
 
-  getDetailInfo(code: number): Observable<ClassificatorDetailInfo> {
-    return this.httpClient.get<ClassificatorDetailInfo>(`classificator/${code}/detailInfo`);
+  getElementChildren(classificatorCode: string, parentId: number): Observable<Element[]> {
+    return this.httpClient.get<Element[]>(`classificator/${classificatorCode}/element/${parentId}/children`);
+  }
+
+  getElementDetailInfo(classificatorCode: string, code: number): Observable<ElementDetailInfo> {
+    return this.httpClient.get<ElementDetailInfo>(`classificator/${classificatorCode}/element/${code}/detailInfo`);
   }
 }

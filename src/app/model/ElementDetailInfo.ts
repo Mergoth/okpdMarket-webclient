@@ -1,6 +1,6 @@
 import {ClassificatorLinkCategory} from './LinkCategories';
 
-export interface ClassificatorDetailInfo {
+export interface ElementDetailInfo {
   code: number;
   name: string;
   description: string;

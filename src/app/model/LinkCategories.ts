@@ -1,4 +1,4 @@
-import {ClassificatorLink} from './ClassificatorLink';
+import {ClassificatorLink} from './ElementLink';
 
 export interface ClassificatorLinkCategory {
   name: string;

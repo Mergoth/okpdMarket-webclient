@@ -5,16 +5,16 @@
    'in-progress': gettingChildrenInProgress
   }">
   <div class="general-info-row" (click)="toggleTreeNode()">
-    <span class="indent-{{classificator.level}}"></span>
+    <span class="indent-{{element.level}}"></span>
     <span
-      [@expanded]="classificator.expanded"
+      [@expanded]="element.expanded"
       [ngClass]="{
     'fa': true,
     'node-icon': !gettingChildrenInProgress,
-    'fa-chevron-right': !gettingChildrenInProgress && classificator.hasChildren,
+    'fa-chevron-right': !gettingChildrenInProgress && element.hasChildren,
     'fa-circle-o-notch fa-spin fa-fw': gettingChildrenInProgress
   }"></span>
-    {{classificator.name}}
+    {{element.name}}
     <button *ngIf="!withDetailInfo" type="button" class="btn btn-info btn-details" (click)="showDetailInfo($event)">Info
     </button>
     <button *ngIf="withDetailInfo" type="button" class="btn btn-info btn-details" (click)="closeDetailInfo($event)">
@@ -27,7 +27,7 @@
     *ngIf="withDetailInfo">
   </classificator-tree-node-detail-info>
 </li>
-<div *ngIf="classificator.expanded">
-  <clsf-classificator-tree-node *ngFor="let node of classificator?.children" [classificator]="node">
+<div *ngIf="element.expanded">
+  <clsf-classificator-tree-node [classificatorCode]="classificatorCode" *ngFor="let node of element?.children" [element]="node">
   </clsf-classificator-tree-node>
 </div>

@@ -1,16 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ClassificatorDetailInfo} from '../model/ClassificatorDetailInfo';
+import {ElementDetailInfo} from '../model/ElementDetailInfo';
 import {Observable} from 'rxjs/Observable';
 import {ClassificatorLinkCategory} from '../model/LinkCategories';
 
 @Component({
   selector: 'classificator-tree-node-detail-info',
   templateUrl: './classificator-tree-node-detail-info.component.html',
-  styleUrls: ['./classificator-tree-node-detail-info.component.css']
+  styleUrls: ['./classificator-tree-node-detail-info.component.scss']
 })
 export class ClassificatorTreeNodeDetailInfoComponent implements OnInit {
   @Input() detailInfo$: Observable<Object>;
-  detailInfo: ClassificatorDetailInfo;
+  detailInfo: ElementDetailInfo;
 
   constructor() { }
 

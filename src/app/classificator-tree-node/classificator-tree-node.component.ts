@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
-import {Classificator} from '../model/Classificator';
+import {Element} from '../model/Element';
 import {ClassificatorService} from '../service/classificator.service';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
@@ -9,7 +9,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import {Observable} from 'rxjs/Observable';
-import {ClassificatorDetailInfo} from '../model/ClassificatorDetailInfo';
+import {ElementDetailInfo} from '../model/ElementDetailInfo';
 
 @Component({
   selector: 'clsf-classificator-tree-node',
@@ -25,13 +25,14 @@ import {ClassificatorDetailInfo} from '../model/ClassificatorDetailInfo';
       transition('* => *', animate('.2s'))
     ])
   ],
-  styleUrls: ['./classificator-tree-node.component.css']
+  styleUrls: ['./classificator-tree-node.component.scss']
 })
 export class ClassificatorTreeNodeComponent implements OnInit {
-  @Input() classificator: Classificator;
+  @Input() element: Element;
   gettingChildrenInProgress = false;
   @Input() withDetailInfo?: boolean;
-  @Output() detailInfo: Observable<ClassificatorDetailInfo>;
+  @Output() detailInfo: Observable<ElementDetailInfo>;
+  @Input() classificatorCode: string;
 
   constructor(private classificatorService: ClassificatorService,
               private eventService: EventService) {
@@ -41,41 +42,41 @@ export class ClassificatorTreeNodeComponent implements OnInit {
   }
 
   toggleTreeNode() {
-    if (this.gettingChildrenInProgress || !this.classificator.hasChildren)
+    if (this.gettingChildrenInProgress || !this.element.hasChildren)
       return;
 
-    const wasExpanded = this.classificator.expanded;
+    const wasExpanded = this.element.expanded;
 
     if (wasExpanded) {
-      this.classificator.expanded = !wasExpanded;
+      this.element.expanded = !wasExpanded;
     } else {
       this.gettingChildrenInProgress = true;
-      this.classificatorService.getChildren(this.classificator.id)
+      this.classificatorService.getElementChildren(this.classificatorCode, this.element.id)
         .mergeMap(it => it)
         .map(classificator => {
           return {
             id: classificator.id,
             name: classificator.name,
-            level: this.classificator.level + 1,
+            level: this.element.level + 1,
             expanded: false,
             hasChildren: classificator.hasChildren,
-            parent: this.classificator
+            parent: this.element
           };
         })
         .toArray()
         .subscribe(classificators => {
-          this.classificator.children = classificators;
-          this.classificator.expanded = !wasExpanded;
+          this.element.children = classificators;
+          this.element.expanded = !wasExpanded;
           this.gettingChildrenInProgress = false;
         });
 
-      this.eventService.publish(Actions.ROW_EXPANDED, this.classificator);
+      this.eventService.publish(Actions.ROW_EXPANDED, this.element);
     }
   }
 
   showDetailInfo($event) {
     $event.stopPropagation();
-    this.detailInfo = this.classificatorService.getDetailInfo(this.classificator.id);
+    this.detailInfo = this.classificatorService.getElementDetailInfo(this.classificatorCode, this.element.id);
     this.withDetailInfo = true;
   }
 

@@ -19,8 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.css"
+        "styles.scss",
+        "../node_modules/bootstrap/scss/bootstrap.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
@@ -59,8 +59,9 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "component": {},
+    "styleExt": "scss",
+    "component": {
+    },
     "serve": {
       "port": 7777
     }
