@@ -34,19 +34,6 @@
   display: inline-block;
 }
 
-.list-group-item {
-  padding-top: 0.55em;
-  padding-bottom: 0.55em;
-  border-radius: 0;
-  background-color: $second;
-  color: $fourth;
-  border-top: none;
-}
-
-.list-group-item:hover {
-  //color: #4cacca;
-}
-
 .list-group-item:last-child {
   margin-bottom: -1px;
 }
@@ -59,7 +46,6 @@
   cursor: wait;
   color: #d3d3d3 !important;
 }
-
 
 .list-group-item .btn-details {
   background-color: $first;
@@ -81,6 +67,25 @@
   opacity: 1.0;
 }
 
-.general-info-row {
-  cursor: pointer;
+.list-group-item {
+  border: none;
+  padding: 0;
+  margin-top: 10px;
+
+  .general-info-row {
+    display: flex;
+    cursor: pointer;
+
+    .row-content {
+      padding-left: 10px;
+      flex-grow: 2;
+      border: $usualBorder;
+      padding-top: 9px;
+      padding-bottom: 9px;
+      display: inline-block;
+      color: $fourth;
+      background-color: $second;
+    }
+  }
 }
+

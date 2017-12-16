@@ -1,16 +1,14 @@
 @import "../../variables";
 
 .breadcrumb {
+  margin-top: 10px;
+  padding: 9px 0 9px 35px;
   background-color: $second;
   margin-bottom: 0;
   border-radius: 0;
-  border-left: $usualBorder;
-  border-right: $usualBorder;
+  border: $usualBorder;
+
   a {
     color: $fourth;
   }
-}
-
-ol.breadcrumb {
-  padding-left: 1.75em;
 }

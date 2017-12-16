@@ -9,8 +9,10 @@ import {ClassificatorService} from './service/classificator.service';
 import {ClassificatorTreeNodeComponent} from './classificator-tree-node/classificator-tree-node.component';
 import {EventService} from './service/event.service';
 import {HttpClientModule} from '@angular/common/http';
-import { ClassificatorTreeNodeDetailInfoComponent } from './classificator-tree-node-detail-info/classificator-tree-node-detail-info.component';
-import { ClassificatorsComponent } from './classificators/classificators.component';
+import {ClassificatorTreeNodeDetailInfoComponent} from './classificator-tree-node-detail-info/classificator-tree-node-detail-info.component';
+import {ClassificatorsComponent} from './classificators/classificators.component';
+import {RouterModule} from '@angular/router';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 
 @NgModule({
@@ -22,9 +24,18 @@ import { ClassificatorsComponent } from './classificators/classificators.compone
     ClassificatorsComponent
   ],
   imports: [
-    BrowserModule, BrowserAnimationsModule, HttpClientModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      {path: '', component: ClassificatorsComponent},
+      {path: 'classificator/:classificator', component: ClassificatorsComponent},
+      {path: 'classificator/:classificator/root/:rootCode', component: ClassificatorsComponent},
+      {path: 'classificator/:classificator/root/:rootCode/child/:childCode', component: ClassificatorsComponent}
+    ])
   ],
-  providers: [ClassificatorService, EventService],
+  providers: [ClassificatorService, EventService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -3,6 +3,8 @@ import {ClassificatorService} from '../service/classificator.service';
 import {Classificator} from '../model/Classificator';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from '@angular/common'
 
 
 @Component({
@@ -15,20 +17,42 @@ export class ClassificatorsComponent implements OnInit {
   activeClassificatorCode = '';
 
   constructor(private classificatorService: ClassificatorService,
-              private eventService: EventService) {
+              private eventService: EventService,
+              private activatedRoute: ActivatedRoute,
+              private location: Location) {
   }
 
   ngOnInit() {
-    console.log('ClassificatorsComponent onInit');
     this.classificatorService.getClassificators().subscribe(
       classificators => {
+        const classificatorCodeFromUrl = this.activatedRoute.snapshot.params['classificator'];
         this.classificators = classificators;
-        console.log(classificators);
+
         if (classificators.length > 0) {
-          this.activeClassificatorCode = classificators[0].code;
-          this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, classificators[0].code);
+          if (classificatorCodeFromUrl == null) {
+            this.location.go('/classificator/' + classificators[0].code);
+            this.activeClassificatorCode = classificators[0].code;
+          } else {
+            this.activeClassificatorCode = classificatorCodeFromUrl;
+          }
+
+          this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, this.activeClassificatorCode);
         } else {
+          // todo:xxx maybe you need to render some empty state
           this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, '');
+        }
+      }
+    );
+
+    this.location.subscribe(
+      data => {
+        if (data.type === 'popstate') {
+          // const classificatorCodeFromUrl = this.activatedRoute.snapshot.params['classificator'];
+          // console.log(classificatorCodeFromUrl);
+          // if (classificatorCodeFromUrl != null) {
+          //   this.activeClassificatorCode = classificatorCodeFromUrl;
+          //   this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, classificatorCodeFromUrl);
+          // }
         }
       }
     );

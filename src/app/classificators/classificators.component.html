@@ -4,8 +4,9 @@
     'classificator': true,
     'nav-link': true,
     'active': activeClassificatorCode === classificator.code
-    }" href="#"
-    (click)="selectClassificator(classificator.code)">
+    }"
+       [routerLink]="['/classificator/' + classificator.code]"
+       (click)=" selectClassificator(classificator.code)">
       {{classificator.code}}
     </a>
   </li>

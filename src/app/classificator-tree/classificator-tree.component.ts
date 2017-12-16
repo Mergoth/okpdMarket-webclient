@@ -4,6 +4,7 @@ import {Element} from '../model/Element';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import _ from 'lodash/array';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'clsf-classificator-tree',
@@ -18,7 +19,8 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   elements: Element[];
 
   constructor(private service: ClassificatorService,
-              private eventService: EventService) {
+              private eventService: EventService,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -27,9 +29,10 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
       'ClassificatorTreeComponent',
       Actions.CLASSIFICATOR_SELECTED,
       classificatorCode => {
-        this.resetRootParent();
+        const rootCode = this.activatedRoute.snapshot.params['rootCode'];
+        this.resetRootParent(rootCode);
         this.classificatorCode = classificatorCode;
-        this.loadChildren(0);
+        this.loadChildren(rootCode);
       }
     );
 
@@ -47,8 +50,8 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
       });
   }
 
-  private loadChildren(parentCode: number) {
-    this.service.getElementChildren(this.classificatorCode, parentCode)
+  private loadChildren(parentCode?: number) {
+    this.service.getElementChildren(this.classificatorCode, parentCode ? parentCode : 0)
       .mergeMap(it => it)
       .map(it => {
         return {
@@ -81,14 +84,18 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
     return tempClassificator;
   }
 
-  moveToParent(id) {
+  moveToParent($event, id) {
+    $event.preventDefault();
     this.loadChildren(id);
     const index = _.findIndex(this.highLevelParents, it => it.id === id);
     this.highLevelParents = _.slice(this.highLevelParents, 0, index + 1);
   }
 
-  private resetRootParent() {
-    this.highLevelParents = [{id: 0, name: 'Root'}];
+  private resetRootParent(rootCode?: string) {
+    if (!rootCode)
+      this.highLevelParents = [{id: 0, name: 'Root'}];
+    else
+      this.highLevelParents = [{id: 0, name: 'Root'}, {id: 1, name: 'Some ' + rootCode}];
   }
 
   ngOnDestroy(): void {
