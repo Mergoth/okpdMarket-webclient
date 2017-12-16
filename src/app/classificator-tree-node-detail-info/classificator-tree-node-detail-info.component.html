@@ -18,7 +18,8 @@
         <ul class="links">
           <li *ngFor="let link of linkCategory.links">
             <span class="link-code">{{link.code}}</span>
-            <a href="#" class="link-name">{{link.name}}</a>
+            <a [routerLink]="['/classificator/OKIN/root/' + link.parentCode + '/child/' + link.code ]"
+               class="link-name">{{link.name}}</a>
           </li>
         </ul>
       </div>

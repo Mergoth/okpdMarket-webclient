@@ -4,7 +4,7 @@ import {Element} from '../model/Element';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import _ from 'lodash/array';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'clsf-classificator-tree',

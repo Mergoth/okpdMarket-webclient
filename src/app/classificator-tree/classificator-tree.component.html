@@ -2,7 +2,7 @@
   <div aria-label="breadcrumb" role="navigation">
     <ol class="breadcrumb">
       <li class="breadcrumb-item" *ngFor="let node of highLevelParents">
-        <a [routerLink]="['/classificator/' + classificatorCode + '/root/' + node.id]"
+        <a href="#"
            (click)="moveToParent($event, node.id)">{{node.name}}</a>
       </li>
     </ol>
