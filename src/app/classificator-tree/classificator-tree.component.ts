@@ -5,6 +5,7 @@ import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import _ from 'lodash/array';
 import {ChangedUrl} from '../model/ChangedUrl';
+import {ElementShortInfo} from '../model/ElementShortInfo';
 
 @Component({
   selector: 'clsf-classificator-tree',
@@ -15,7 +16,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   static MAX_NESTING_LEVEL = 4;
 
   @Input() classificatorCode: string;
-  highLevelParents: { id: number, name: string }[];
+  highLevelParents: ElementShortInfo[];
   elements: Element[];
 
   constructor(private service: ClassificatorService,
@@ -30,7 +31,6 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
       (data: ChangedUrl) => {
         this.classificatorCode = data.classificator;
         this.resetHighLevelParents(data.parentCode);
-        console.log(Actions.CLASSIFICATOR_SELECTED, data);
         this.loadChildren(data.parentCode, data.childCode);
       }
     );
@@ -44,7 +44,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
           const futureRoot = this.findFutureRootClassificatorFrom(classificator);
           this.decrementLevelsIn(futureRoot.children);
           this.elements = futureRoot.children;
-          this.highLevelParents.push({id: futureRoot.id, name: futureRoot.name});
+          this.highLevelParents.push({code: futureRoot.id, name: futureRoot.name});
         }
       });
   }
@@ -91,12 +91,16 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
     this.highLevelParents = _.slice(this.highLevelParents, 0, index + 1);
   }
 
-  private resetHighLevelParents(rootCode?: number) {
-    // todo: need to complete
-    if (rootCode === 0)
-      this.highLevelParents = [{id: 0, name: 'Root'}];
-    else
-      this.highLevelParents = [{id: 0, name: 'Root'}, {id: 1, name: 'Some ' + rootCode}];
+  private resetHighLevelParents(rootCode: number = 0) {
+    const root = {code: 0, name: 'Root'};
+    if (rootCode === 0) {
+      this.highLevelParents = [root];
+    } else {
+      this.service.getElementParents(this.classificatorCode, rootCode)
+        .subscribe(data => {
+          this.highLevelParents = [root].concat(data);
+        });
+    }
   }
 
   ngOnDestroy(): void {

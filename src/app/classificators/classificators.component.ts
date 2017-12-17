@@ -24,7 +24,6 @@ export class ClassificatorsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Classificators on init');
     this.classificatorService.getClassificators().subscribe(
       classificators => {
         const classificatorCodeFromUrl = this.activatedRoute.snapshot.params['classificator'];
@@ -56,15 +55,12 @@ export class ClassificatorsComponent implements OnInit {
 
     this.eventService.subscribeFor('Classificators', Actions.URL_CHANGED,
       (data: ChangedUrl) => {
-        console.log(data);
         this.activeClassificatorCode = data.classificator;
         this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, data);
       });
 
     this.location.subscribe(
       data => {
-        console.log('location changed');
-        console.log(data);
         if (data.type === 'popstate') {
           // const classificatorCodeFromUrl = this.activatedRoute.snapshot.params['classificator'];
           // console.log(classificatorCodeFromUrl);
