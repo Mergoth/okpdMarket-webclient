@@ -23,13 +23,13 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.resetRootParent();
+    this.resetHighLevelParents();
     this.eventService.subscribeFor(
       'ClassificatorTreeComponent',
       Actions.CLASSIFICATOR_SELECTED,
       (data: ChangedUrl) => {
         this.classificatorCode = data.classificator;
-        this.resetRootParent(data.parentCode);
+        this.resetHighLevelParents(data.parentCode);
         console.log(Actions.CLASSIFICATOR_SELECTED, data);
         this.loadChildren(data.parentCode, data.childCode);
       }
@@ -91,7 +91,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
     this.highLevelParents = _.slice(this.highLevelParents, 0, index + 1);
   }
 
-  private resetRootParent(rootCode?: number) {
+  private resetHighLevelParents(rootCode?: number) {
     // todo: need to complete
     if (rootCode === 0)
       this.highLevelParents = [{id: 0, name: 'Root'}];
