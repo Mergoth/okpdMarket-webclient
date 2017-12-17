@@ -7,8 +7,8 @@
   <div class="general-info-row">
     <span class="indent-{{element.level}}"></span>
     <div class="row-content">
+      <div class="main-line-content" (click)="toggleTreeNode()">
     <span
-      (click)="toggleTreeNode()"
       [@expanded]="element.expanded"
       [ngClass]="{
     'fa': true,
@@ -16,13 +16,16 @@
     'fa-chevron-right': !gettingChildrenInProgress && element.hasChildren,
     'fa-circle-o-notch fa-spin fa-fw': gettingChildrenInProgress
   }"></span>
-      <span (click)="toggleTreeNode()">{{element.name}}</span>
-      <button *ngIf="!element.withDetailInfo" type="button" class="btn btn-info btn-details" (click)="showDetailInfo($event)">
-        Info
-      </button>
-      <button *ngIf="element.withDetailInfo" type="button" class="btn btn-info btn-details" (click)="closeDetailInfo($event)">
-        Close Info
-      </button>
+        <span>{{element.name}}</span>
+        <button *ngIf="!element.withDetailInfo" type="button" class="btn btn-info btn-details"
+                (click)="showDetailInfo($event)">
+          Info
+        </button>
+        <button *ngIf="element.withDetailInfo" type="button" class="btn btn-info btn-details"
+                (click)="closeDetailInfo($event)">
+          Close Info
+        </button>
+      </div>
       <clsf-tree-node-detail-info
         [classificatorCode]="classificatorCode"
         [elementCode]="element.id"

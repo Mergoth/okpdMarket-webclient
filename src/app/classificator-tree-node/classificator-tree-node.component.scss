@@ -74,7 +74,6 @@
 
   .general-info-row {
     display: flex;
-    cursor: pointer;
 
     .row-content {
       padding-left: 10px;
@@ -85,6 +84,10 @@
       display: inline-block;
       color: $fourth;
       background-color: $second;
+
+      .main-line-content {
+        cursor: pointer;
+      }
     }
   }
 }
