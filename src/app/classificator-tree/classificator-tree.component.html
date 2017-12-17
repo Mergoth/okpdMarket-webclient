@@ -3,7 +3,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item" *ngFor="let node of highLevelParents">
         <a href="#"
-           (click)="moveToParent($event, node.id)">{{node.name}}</a>
+           (click)="moveToParent($event, node.code)">{{node.name}}</a>
       </li>
     </ol>
   </div>

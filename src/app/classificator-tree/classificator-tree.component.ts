@@ -84,10 +84,10 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
     return tempClassificator;
   }
 
-  moveToParent($event, id) {
+  moveToParent($event, code) {
     $event.preventDefault();
-    this.loadChildren(id);
-    const index = _.findIndex(this.highLevelParents, it => it.id === id);
+    this.loadChildren(code);
+    const index = _.findIndex(this.highLevelParents, it => it.code === code);
     this.highLevelParents = _.slice(this.highLevelParents, 0, index + 1);
   }
 
