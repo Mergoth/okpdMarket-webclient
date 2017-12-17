@@ -3,27 +3,37 @@
   <span class="fa fa-cog fa-spin fa-2x fa-fw"></span>
 </div>
 
-<div *ngIf="detailInfo != null" class="detail-info">
-  <hr/>
-  <div>
-    <span class="code">{{detailInfo.code}}</span>
-    <span class="name">{{detailInfo.name}}</span>
-  </div>
-  <div>
+<div *ngIf="detailInfo != null" class="detail-info row">
+  <hr class="col-md-12"/>
+  <div [ngClass]="{
+  'col-md-6': detailInfo.links.length > 0,
+  'col-md-12': detailInfo.links.length == 0
+  }">
+    <div>
+      <span class="label">Code:</span>
+      <span class="code">{{detailInfo.code}}</span>
+    </div>
+    <div>
+      <span class="label">Name:</span>
+      <span class="name">{{detailInfo.name}}</span>
+    </div>
     <span class="description">Some very informative description</span>
   </div>
-  <div class="links">
-    <div class="category-links">
-      <div *ngFor="let linkCategory of detailInfo.links">
-        <span class="category-name">{{linkCategory.name}}:</span>
-        <ul class="links">
-          <li *ngFor="let link of linkCategory.links">
-            <span class="link-code">{{link.code}}</span>
-            <a href="#"
-               (click)="goToLink($event, linkCategory, link)"
-               class="link-name">{{link.name}}</a>
-          </li>
-        </ul>
+  <div *ngIf="detailInfo.links.length > 0" class="links col-md-6">
+    <span class="label">Links:</span>
+    <div>
+      <div class="category-links">
+        <div *ngFor="let linkCategory of detailInfo.links">
+          <span class="category-name">{{linkCategory.name}}:</span>
+          <ul>
+            <li *ngFor="let link of linkCategory.links">
+              <span class="link-code">{{link.code}}</span>
+              <a href="#"
+                 (click)="goToLink($event, linkCategory, link)"
+                 class="link-name">{{link.name}}</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

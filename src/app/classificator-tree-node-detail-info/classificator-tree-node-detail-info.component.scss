@@ -1,7 +1,19 @@
-.links {
-  list-style-type: none;
-}
+@import "../../variables";
 
 .detail-info {
   padding-left: 25px;
+
+  .label {
+    font-weight: 600;
+  }
+
+  .links {
+    border-left: $usualBorder;
+    list-style-type: none;
+  }
+
+  .description {
+    display: block;
+    margin-top: 10px;
+  }
 }
