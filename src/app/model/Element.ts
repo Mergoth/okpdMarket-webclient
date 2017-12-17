@@ -7,4 +7,5 @@ export interface Element {
   expanded?: boolean;
   children?: Element[];
   childrenCount?: number;
+  withDetailInfo: Boolean;
 }

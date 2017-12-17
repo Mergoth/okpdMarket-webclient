@@ -1,5 +1,6 @@
-<div *ngIf="detailInfo == null" class="loading">
-  Loading...
+<div *ngIf="detailInfo == null" class="loading detail-info">
+  <hr/>
+  <span class="fa fa-cog fa-spin fa-2x fa-fw"></span>
 </div>
 
 <div *ngIf="detailInfo != null" class="detail-info">
@@ -18,7 +19,8 @@
         <ul class="links">
           <li *ngFor="let link of linkCategory.links">
             <span class="link-code">{{link.code}}</span>
-            <a [routerLink]="['/classificator/OKIN/root/' + link.parentCode + '/child/' + link.code ]"
+            <a href="#"
+               (click)="goToLink($event, linkCategory, link)"
                class="link-name">{{link.name}}</a>
           </li>
         </ul>

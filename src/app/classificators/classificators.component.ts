@@ -3,8 +3,9 @@ import {ClassificatorService} from '../service/classificator.service';
 import {Classificator} from '../model/Classificator';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common'
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
+import {ChangedUrl} from '../model/ChangedUrl';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class ClassificatorsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Classificators on init');
     this.classificatorService.getClassificators().subscribe(
       classificators => {
         const classificatorCodeFromUrl = this.activatedRoute.snapshot.params['classificator'];
@@ -36,16 +38,25 @@ export class ClassificatorsComponent implements OnInit {
             this.activeClassificatorCode = classificatorCodeFromUrl;
           }
 
-          this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, this.activeClassificatorCode);
+          this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, new ChangedUrl(this.activeClassificatorCode));
         } else {
           // todo:xxx maybe you need to render some empty state
-          this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, '');
+          this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, new ChangedUrl(''));
         }
       }
     );
 
+    this.eventService.subscribeFor('Classificators', Actions.URL_CHANGED,
+      (data: ChangedUrl) => {
+        console.log(data);
+        this.activeClassificatorCode = data.classificator;
+        this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, data);
+      });
+
     this.location.subscribe(
       data => {
+        console.log('location changed');
+        console.log(data);
         if (data.type === 'popstate') {
           // const classificatorCodeFromUrl = this.activatedRoute.snapshot.params['classificator'];
           // console.log(classificatorCodeFromUrl);
@@ -60,6 +71,6 @@ export class ClassificatorsComponent implements OnInit {
 
   selectClassificator(code) {
     this.activeClassificatorCode = code;
-    this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, code);
+    this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, new ChangedUrl(code));
   }
 }

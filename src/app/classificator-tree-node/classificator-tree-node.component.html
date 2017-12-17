@@ -17,16 +17,16 @@
     'fa-circle-o-notch fa-spin fa-fw': gettingChildrenInProgress
   }"></span>
       <span (click)="toggleTreeNode()">{{element.name}}</span>
-      <button *ngIf="!withDetailInfo" type="button" class="btn btn-info btn-details" (click)="showDetailInfo($event)">
+      <button *ngIf="!element.withDetailInfo" type="button" class="btn btn-info btn-details" (click)="showDetailInfo($event)">
         Info
       </button>
-      <button *ngIf="withDetailInfo" type="button" class="btn btn-info btn-details" (click)="closeDetailInfo($event)">
-        Close
-        Info
+      <button *ngIf="element.withDetailInfo" type="button" class="btn btn-info btn-details" (click)="closeDetailInfo($event)">
+        Close Info
       </button>
       <clsf-tree-node-detail-info
-        [detailInfo$]="detailInfo"
-        *ngIf="withDetailInfo">
+        [classificatorCode]="classificatorCode"
+        [elementCode]="element.id"
+        *ngIf="element.withDetailInfo">
       </clsf-tree-node-detail-info>
     </div>
   </div>

@@ -32,7 +32,6 @@ import {Location} from '@angular/common';
 export class ClassificatorTreeNodeComponent implements OnInit {
   @Input() element: Element;
   gettingChildrenInProgress = false;
-  @Input() withDetailInfo?: boolean;
   @Output() detailInfo: Observable<ElementDetailInfo>;
   @Input() classificatorCode: string;
 
@@ -67,7 +66,8 @@ export class ClassificatorTreeNodeComponent implements OnInit {
             level: this.element.level + 1,
             expanded: false,
             hasChildren: classificator.hasChildren,
-            parent: this.element
+            parent: this.element,
+            withDetailInfo: false
           };
         })
         .toArray()
@@ -84,14 +84,13 @@ export class ClassificatorTreeNodeComponent implements OnInit {
   showDetailInfo($event?) {
     if ($event != null)
       $event.stopPropagation();
-    this.detailInfo = this.classificatorService.getElementDetailInfo(this.classificatorCode, this.element.id);
-    this.withDetailInfo = true;
+    this.element.withDetailInfo = true;
     const parentCode = this.element.parent ? this.element.parent.id : 0;
     this.location.go(`/classificator/${this.classificatorCode}/root/${parentCode}/child/${this.element.id}`);
   }
 
   closeDetailInfo($event: Event) {
     $event.stopPropagation();
-    this.withDetailInfo = false;
+    this.element.withDetailInfo = false;
   }
 }

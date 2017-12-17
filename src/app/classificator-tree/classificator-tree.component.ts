@@ -4,7 +4,7 @@ import {Element} from '../model/Element';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import _ from 'lodash/array';
-import {ActivatedRoute} from '@angular/router';
+import {ChangedUrl} from '../model/ChangedUrl';
 
 @Component({
   selector: 'clsf-classificator-tree',
@@ -19,8 +19,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   elements: Element[];
 
   constructor(private service: ClassificatorService,
-              private eventService: EventService,
-              private activatedRoute: ActivatedRoute) {
+              private eventService: EventService) {
   }
 
   ngOnInit(): void {
@@ -28,11 +27,11 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
     this.eventService.subscribeFor(
       'ClassificatorTreeComponent',
       Actions.CLASSIFICATOR_SELECTED,
-      classificatorCode => {
-        const rootCode = this.activatedRoute.snapshot.params['rootCode'];
-        this.resetRootParent(rootCode);
-        this.classificatorCode = classificatorCode;
-        this.loadChildren(rootCode);
+      (data: ChangedUrl) => {
+        this.classificatorCode = data.classificator;
+        this.resetRootParent(data.parentCode);
+        console.log(Actions.CLASSIFICATOR_SELECTED, data);
+        this.loadChildren(data.parentCode, data.childCode);
       }
     );
 
@@ -50,7 +49,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
       });
   }
 
-  private loadChildren(parentCode?: number) {
+  private loadChildren(parentCode?: number, childCode?: number) {
     this.service.getElementChildren(this.classificatorCode, parentCode ? parentCode : 0)
       .mergeMap(it => it)
       .map(it => {
@@ -59,7 +58,8 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
           name: it.name,
           level: 0,
           expanded: false,
-          hasChildren: it.hasChildren
+          hasChildren: it.hasChildren,
+          withDetailInfo: it.id === childCode
         };
       })
       .toArray()
@@ -91,8 +91,9 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
     this.highLevelParents = _.slice(this.highLevelParents, 0, index + 1);
   }
 
-  private resetRootParent(rootCode?: string) {
-    if (!rootCode)
+  private resetRootParent(rootCode?: number) {
+    // todo: need to complete
+    if (rootCode === 0)
       this.highLevelParents = [{id: 0, name: 'Root'}];
     else
       this.highLevelParents = [{id: 0, name: 'Root'}, {id: 1, name: 'Some ' + rootCode}];

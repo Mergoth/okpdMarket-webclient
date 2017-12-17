@@ -35,6 +35,7 @@ export class EventService {
   }
 
   subscribeFor(componentName: string, name: string, callback: EventCallback): ComponentEventSubscription {
+    console.log(`Component name => ${componentName}, name => ${name}`);
     let componentEventSubscription = this.componentSubscriptions.find(cS => cS.componentName === componentName);
 
     if (!componentEventSubscription) {

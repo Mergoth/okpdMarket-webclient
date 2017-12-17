@@ -8,7 +8,10 @@
     </ol>
   </div>
   <ul class="list-group">
-    <clsf-classificator-tree-node [classificatorCode]="classificatorCode" *ngFor="let node of elements" [element]="node">
+    <clsf-classificator-tree-node
+      [classificatorCode]="classificatorCode"
+      *ngFor="let node of elements"
+      [element]="node">
     </clsf-classificator-tree-node>
   </ul>
 </div>
