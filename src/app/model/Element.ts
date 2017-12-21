@@ -1,11 +1,14 @@
+import {ChainInPath} from './ChainInPath';
+
 export interface Element {
-  id: number;
+  code: string;
   name: string;
-  parent?: Element;
   level: number;
+  parent?: Element;
   hasChildren: boolean;
   expanded?: boolean;
   children?: Element[];
   childrenCount?: number;
   withDetailInfo: Boolean;
+  path: ChainInPath[];
 }

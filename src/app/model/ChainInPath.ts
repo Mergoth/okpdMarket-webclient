@@ -1,4 +1,4 @@
-export interface Classificator {
+export interface ChainInPath {
   code: string;
   name: string;
 }

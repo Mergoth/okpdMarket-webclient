@@ -4,7 +4,7 @@
 </div>
 
 <div *ngIf="detailInfo != null" class="detail-info row">
-  <hr class="col-md-12"/>
+  <hr class="col-md-11"/>
   <div [ngClass]="{
   'col-md-6': detailInfo.links.length > 0,
   'col-md-12': detailInfo.links.length == 0
@@ -17,7 +17,6 @@
       <span class="label">Name:</span>
       <span class="name">{{detailInfo.name}}</span>
     </div>
-    <span class="description">Some very informative description</span>
   </div>
   <div *ngIf="detailInfo.links.length > 0" class="links col-md-6">
     <span class="label">Links:</span>

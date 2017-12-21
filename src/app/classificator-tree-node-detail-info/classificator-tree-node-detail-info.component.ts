@@ -6,6 +6,7 @@ import {ClassificatorLinkCategory} from '../model/LinkCategories';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import {ChangedUrl} from '../model/ChangedUrl';
+import {Element} from '../model/Element';
 import {ClassificatorService} from '../service/classificator.service';
 
 @Component({
@@ -14,8 +15,7 @@ import {ClassificatorService} from '../service/classificator.service';
   styleUrls: ['./classificator-tree-node-detail-info.component.scss']
 })
 export class ClassificatorTreeNodeDetailInfoComponent implements OnInit {
-  @Input() classificatorCode: string;
-  @Input() elementCode: number;
+  @Input() element: Element;
   detailInfo: ElementDetailInfo;
 
   constructor(private location: Location,
@@ -24,28 +24,34 @@ export class ClassificatorTreeNodeDetailInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    const detailInfo$ = this.classificatorService.getElementDetailInfo(this.classificatorCode, this.elementCode);
-    if (detailInfo$ != null) {
-      detailInfo$.subscribe(
-        it => {
-          const categories = it['links'];
-          const categoryNames = Object.keys(categories);
-
-          this.detailInfo = {
-            code: it['code'],
-            name: it['name'],
-            description: it['description'],
-            classificatorCode: it['classificatorCode'],
-            links: categoryNames.map(category => {
-              return {
-                name: category,
-                links: categories[category]
-              };
-            })
-          };
-        }
-      );
-    }
+    // const detailInfo$ = this.classificatorService.getElementDetailInfo(this.classificatorCode, this.elementCode);
+    // if (detailInfo$ != null) {
+    //   detailInfo$.subscribe(
+    //     it => {
+    //       const categories = it['links'];
+    //       const categoryNames = Object.keys(categories);
+    //
+    //       this.detailInfo = {
+    //         code: it['code'],
+    //         name: it['name'],
+    //         description: it['description'],
+    //         classificatorCode: it['classificatorCode'],
+    //         links: categoryNames.map(category => {
+    //           return {
+    //             name: category,
+    //             links: categories[category]
+    //           };
+    //         })
+    //       };
+    //     }
+    //   );
+    // }
+    this.detailInfo = {
+      code: this.element.code,
+      name: this.element.name,
+      description: '',
+      links: []
+    };
   }
 
   goToLink($event, linkCategory: ClassificatorLinkCategory, link: ElementLink) {

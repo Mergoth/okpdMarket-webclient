@@ -1,5 +1,5 @@
 export interface ElementLink {
-  code: number;
+  code: string;
   name: string;
-  parentCode: number;
+  parentCode: string;
 }

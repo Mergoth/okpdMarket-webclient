@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
-import {ElementDetailInfo} from '../model/ElementDetailInfo';
+import 'rxjs/add/operator/do';
 import {Classificator} from '../model/Classificator';
 import {ElementShortInfo} from '../model/ElementShortInfo';
 
@@ -15,18 +15,20 @@ export class ClassificatorService {
   }
 
   getClassificators(): Observable<Classificator[]> {
-    return this.httpClient.get<Classificator[]>(`classificator/all`);
+    return this.httpClient.get<Classificator[]>(`classificators`);
   }
 
-  getElementChildren(classificatorCode: string, parentId: number): Observable<Element[]> {
-    return this.httpClient.get<Element[]>(`classificator/${classificatorCode}/element/${parentId}/children`);
+  getElementChildren(classificatorCode: string, parentCode?: string): Observable<Element[]> {
+    return parentCode
+      ? this.httpClient.get<Element>(`classificators/${classificatorCode}/${parentCode}`).map(it => it.children)
+      : this.httpClient.get<Element[]>(`classificators/${classificatorCode}`);
   }
 
-  getElementDetailInfo(classificatorCode: string, code: number): Observable<ElementDetailInfo> {
-    return this.httpClient.get<ElementDetailInfo>(`classificator/${classificatorCode}/element/${code}/detailInfo`);
+  getElement(classificatorCode: string, code: string): Observable<Element> {
+    return this.httpClient.get<Element>(`classificators/${classificatorCode}/${code}`);
   }
 
-  getElementParents(classificatorCode: string, code: number): Observable<ElementShortInfo[]> {
+  getElementParents(classificatorCode: string, code: string): Observable<ElementShortInfo[]> {
     return this.httpClient.get<ElementShortInfo[]>(`classificator/${classificatorCode}/element/${code}/parents`);
   }
 }

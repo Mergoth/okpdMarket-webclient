@@ -38,14 +38,11 @@ export class ClassificatorsComponent implements OnInit {
           }
 
           const rootParam = this.activatedRoute.snapshot.params['rootCode'];
-          const root = rootParam ? Number(rootParam) : 0;
-
           const childCodeParam = this.activatedRoute.snapshot.params['childCode'];
-          const childCode = childCodeParam ? Number(childCodeParam) : 0;
 
           this.eventService.publish(
             Actions.CLASSIFICATOR_SELECTED,
-            new ChangedUrl(this.activeClassificatorCode, root, childCode));
+            new ChangedUrl(this.activeClassificatorCode, rootParam, childCodeParam));
         } else {
           // todo:xxx maybe you need to render some empty state
           this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, new ChangedUrl(''));

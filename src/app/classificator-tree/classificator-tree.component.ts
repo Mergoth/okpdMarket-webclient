@@ -6,6 +6,7 @@ import {Actions} from '../service/Actions';
 import _ from 'lodash/array';
 import {ChangedUrl} from '../model/ChangedUrl';
 import {ElementShortInfo} from '../model/ElementShortInfo';
+import 'rxjs/add/operator/do';
 
 @Component({
   selector: 'clsf-classificator-tree',
@@ -24,14 +25,13 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.resetHighLevelParents();
+
     this.eventService.subscribeFor(
       'ClassificatorTreeComponent',
       Actions.CLASSIFICATOR_SELECTED,
       (data: ChangedUrl) => {
         this.classificatorCode = data.classificator;
-        this.resetHighLevelParents(data.parentCode);
-        this.loadChildren(data.parentCode, data.childCode);
+        this.loadTreeData(data.parentCode, data.childCode, true);
       }
     );
 
@@ -44,27 +44,8 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
           const futureRoot = this.findFutureRootClassificatorFrom(classificator);
           this.decrementLevelsIn(futureRoot.children);
           this.elements = futureRoot.children;
-          this.highLevelParents.push({code: futureRoot.id, name: futureRoot.name});
+          this.highLevelParents.push({code: futureRoot.code, name: futureRoot.name});
         }
-      });
-  }
-
-  private loadChildren(parentCode?: number, childCode?: number) {
-    this.service.getElementChildren(this.classificatorCode, parentCode ? parentCode : 0)
-      .mergeMap(it => it)
-      .map(it => {
-        return {
-          id: it.id,
-          name: it.name,
-          level: 0,
-          expanded: false,
-          hasChildren: it.hasChildren,
-          withDetailInfo: it.id === childCode
-        };
-      })
-      .toArray()
-      .subscribe(elements => {
-        this.elements = elements;
       });
   }
 
@@ -86,19 +67,53 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
 
   moveToParent($event, code) {
     $event.preventDefault();
-    this.loadChildren(code);
+    this.loadTreeData(code);
     const index = _.findIndex(this.highLevelParents, it => it.code === code);
     this.highLevelParents = _.slice(this.highLevelParents, 0, index + 1);
   }
 
-  private resetHighLevelParents(rootCode: number = 0) {
-    const root = {code: 0, name: 'Root'};
-    if (rootCode === 0) {
-      this.highLevelParents = [root];
+  private loadTreeData(parentCode?: string, childCode?: string, withBreadCrumps: Boolean = false) {
+    if (parentCode) {
+      this.service.getElement(this.classificatorCode, parentCode)
+        .subscribe(
+          element => {
+            if (withBreadCrumps)
+              this.highLevelParents = [{name: 'Root'}].concat(element.path);
+
+            this.elements = element.children.map(it => {
+              return {
+                code: it.code,
+                name: it.name,
+                level: 0,
+                expanded: false,
+                hasChildren: it.hasChildren,
+                withDetailInfo: it.code === childCode,
+                path: it.path,
+                parent: element
+              };
+            });
+          }
+        );
     } else {
-      this.service.getElementParents(this.classificatorCode, rootCode)
-        .subscribe(data => {
-          this.highLevelParents = [root].concat(data);
+      if (withBreadCrumps)
+        this.highLevelParents = [{name: 'Root'}];
+
+      this.service.getElementChildren(this.classificatorCode)
+        .mergeMap(it => it)
+        .map(it => {
+          return {
+            code: it.code,
+            name: it.name,
+            level: 0,
+            expanded: false,
+            hasChildren: it.hasChildren,
+            withDetailInfo: false,
+            path: []
+          };
+        })
+        .toArray()
+        .subscribe(elements => {
+          this.elements = elements;
         });
     }
   }

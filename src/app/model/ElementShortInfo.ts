@@ -1,4 +1,4 @@
 export interface ElementShortInfo {
-  code: number;
+  code?: string;
   name: string;
 }

@@ -26,9 +26,7 @@
           Close Info
         </button>
       </div>
-      <clsf-tree-node-detail-info
-        [classificatorCode]="classificatorCode"
-        [elementCode]="element.id"
+      <clsf-tree-node-detail-info [element]="element"
         *ngIf="element.withDetailInfo">
       </clsf-tree-node-detail-info>
     </div>
