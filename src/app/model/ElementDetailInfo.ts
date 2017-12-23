@@ -1,3 +1,4 @@
+import {ElementLink} from './ElementLink';
 import {ClassificatorLinkCategory} from './LinkCategories';
 
 export interface ElementDetailInfo {

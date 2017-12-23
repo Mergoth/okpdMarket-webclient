@@ -19,38 +19,21 @@ export class ClassificatorTreeNodeDetailInfoComponent implements OnInit {
   detailInfo: ElementDetailInfo;
 
   constructor(private location: Location,
-              private classificatorService: ClassificatorService,
               private eventService: EventService) {
   }
 
   ngOnInit() {
-    // const detailInfo$ = this.classificatorService.getElementDetailInfo(this.classificatorCode, this.elementCode);
-    // if (detailInfo$ != null) {
-    //   detailInfo$.subscribe(
-    //     it => {
-    //       const categories = it['links'];
-    //       const categoryNames = Object.keys(categories);
-    //
-    //       this.detailInfo = {
-    //         code: it['code'],
-    //         name: it['name'],
-    //         description: it['description'],
-    //         classificatorCode: it['classificatorCode'],
-    //         links: categoryNames.map(category => {
-    //           return {
-    //             name: category,
-    //             links: categories[category]
-    //           };
-    //         })
-    //       };
-    //     }
-    //   );
-    // }
     this.detailInfo = {
       code: this.element.code,
       name: this.element.name,
       description: '',
-      links: []
+      links: Object.keys(this.element.links).map(
+        linkCategory => {
+          return {
+            name: linkCategory,
+            links: this.element.links[linkCategory]
+          };
+        })
     };
   }
 

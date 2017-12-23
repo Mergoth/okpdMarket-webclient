@@ -5,8 +5,8 @@
     'nav-link': true,
     'active': activeClassificatorCode === classificator.code
     }"
-       [routerLink]="['/classificator/' + classificator.code]"
-       (click)=" selectClassificator(classificator.code)">
+       href="#"
+       (click)="selectClassificator(classificator.code, $event)">
       {{classificator.name}}
     </a>
   </li>

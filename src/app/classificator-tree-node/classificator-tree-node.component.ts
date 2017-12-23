@@ -42,8 +42,7 @@ export class ClassificatorTreeNodeComponent implements OnInit {
   }
 
   ngOnInit() {
-    const childCode = this.activatedRoute.snapshot.params['childCode'];
-    if (childCode && childCode === this.element.code)
+    if (this.element.withDetailInfo)
       this.showDetailInfo();
   }
 
@@ -59,20 +58,22 @@ export class ClassificatorTreeNodeComponent implements OnInit {
       this.gettingChildrenInProgress = true;
       this.classificatorService.getElementChildren(this.classificatorCode, this.element.code)
         .mergeMap(it => it)
-        .map(classificator => {
+        .map(element => {
           return {
-            code: classificator.code,
-            name: classificator.name,
+            code: element.code,
+            name: element.name,
             level: this.element.level + 1,
             expanded: false,
-            hasChildren: classificator.hasChildren,
+            hasChildren: element.hasChildren,
             parent: this.element,
-            withDetailInfo: false
+            withDetailInfo: false,
+            links: element.links,
+            path: element.path
           };
         })
         .toArray()
-        .subscribe(classificators => {
-          this.element.children = classificators;
+        .subscribe(children => {
+          this.element.children = children;
           this.element.expanded = !wasExpanded;
           this.gettingChildrenInProgress = false;
         });
@@ -86,7 +87,6 @@ export class ClassificatorTreeNodeComponent implements OnInit {
       $event.stopPropagation();
     this.element.withDetailInfo = true;
     const parentCode = this.element.parent ? this.element.parent.code : '0';
-    console.log(parentCode)
     this.location.go(`/classificator/${this.classificatorCode}/root/${parentCode}/child/${this.element.code}`);
   }
 

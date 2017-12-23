@@ -25,7 +25,6 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.eventService.subscribeFor(
       'ClassificatorTreeComponent',
       Actions.CLASSIFICATOR_SELECTED,
@@ -77,19 +76,20 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
       this.service.getElement(this.classificatorCode, parentCode)
         .subscribe(
           element => {
-            if (withBreadCrumps)
+            if (withBreadCrumps) {
               this.highLevelParents = [{name: 'Root'}].concat(element.path);
-
-            this.elements = element.children.map(it => {
+            }
+            this.elements = element.children.map(child => {
               return {
-                code: it.code,
-                name: it.name,
+                code: child.code,
+                name: child.name,
                 level: 0,
                 expanded: false,
-                hasChildren: it.hasChildren,
-                withDetailInfo: it.code === childCode,
-                path: it.path,
-                parent: element
+                hasChildren: child.hasChildren,
+                withDetailInfo: child.code === childCode,
+                path: child.path,
+                parent: element,
+                links: child.links
               };
             });
           }
@@ -108,7 +108,8 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
             expanded: false,
             hasChildren: it.hasChildren,
             withDetailInfo: false,
-            path: []
+            path: [],
+            links: it.links
           };
         })
         .toArray()

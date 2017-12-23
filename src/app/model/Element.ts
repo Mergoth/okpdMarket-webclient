@@ -1,4 +1,5 @@
 import {ChainInPath} from './ChainInPath';
+import {ElementLink} from './ElementLink';
 
 export interface Element {
   code: string;
@@ -8,7 +9,7 @@ export interface Element {
   hasChildren: boolean;
   expanded?: boolean;
   children?: Element[];
-  childrenCount?: number;
   withDetailInfo: Boolean;
   path: ChainInPath[];
+  links: Map<String, ElementLink[]>;
 }

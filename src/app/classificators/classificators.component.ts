@@ -60,7 +60,6 @@ export class ClassificatorsComponent implements OnInit {
       data => {
         if (data.type === 'popstate') {
           // const classificatorCodeFromUrl = this.activatedRoute.snapshot.params['classificator'];
-          // console.log(classificatorCodeFromUrl);
           // if (classificatorCodeFromUrl != null) {
           //   this.activeClassificatorCode = classificatorCodeFromUrl;
           //   this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, classificatorCodeFromUrl);
@@ -70,8 +69,10 @@ export class ClassificatorsComponent implements OnInit {
     );
   }
 
-  selectClassificator(code) {
+  selectClassificator(code, $event) {
+    $event.preventDefault();
     this.activeClassificatorCode = code;
     this.eventService.publish(Actions.CLASSIFICATOR_SELECTED, new ChangedUrl(code));
+    this.location.go(`classificator/${this.activeClassificatorCode}`);
   }
 }

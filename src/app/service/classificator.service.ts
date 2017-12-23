@@ -6,7 +6,6 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/do';
 import {Classificator} from '../model/Classificator';
-import {ElementShortInfo} from '../model/ElementShortInfo';
 
 @Injectable()
 export class ClassificatorService {
@@ -26,9 +25,5 @@ export class ClassificatorService {
 
   getElement(classificatorCode: string, code: string): Observable<Element> {
     return this.httpClient.get<Element>(`classificators/${classificatorCode}/${code}`);
-  }
-
-  getElementParents(classificatorCode: string, code: string): Observable<ElementShortInfo[]> {
-    return this.httpClient.get<ElementShortInfo[]>(`classificator/${classificatorCode}/element/${code}/parents`);
   }
 }
