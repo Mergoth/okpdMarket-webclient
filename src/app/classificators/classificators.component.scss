@@ -1,9 +1,6 @@
 @import "../../variables";
 
 .nav-item {
-  .nav-link.active {
-    background-color: $second;
-  }
   .classificator.active {
     color: $fourth !important;
   }

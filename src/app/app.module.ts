@@ -13,6 +13,9 @@ import {ClassificatorTreeNodeDetailInfoComponent} from './classificator-tree-nod
 import {ClassificatorsComponent} from './classificators/classificators.component';
 import {RouterModule} from '@angular/router';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import { ElementSearchComponent } from './element-search/element-search.component';
+import { ClassificatorPageComponent } from './classificator-page/classificator-page.component';
+import { SearchByTextComponent } from './search-by-text/search-by-text.component';
 
 
 @NgModule({
@@ -21,17 +24,19 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
     ClassificatorTreeComponent,
     ClassificatorTreeNodeComponent,
     ClassificatorTreeNodeDetailInfoComponent,
-    ClassificatorsComponent
+    ClassificatorsComponent,
+    ElementSearchComponent,
+    ClassificatorPageComponent,
+    SearchByTextComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {path: '', component: ClassificatorsComponent},
-      {path: 'classificator/:classificator', component: ClassificatorsComponent},
-      {path: 'classificator/:classificator/root/:rootCode', component: ClassificatorsComponent},
-      {path: 'classificator/:classificator/root/:rootCode/child/:childCode', component: ClassificatorsComponent}
+      {path: '', component: ClassificatorPageComponent},
+      {path: 'classificator/:classificator', component: ClassificatorPageComponent},
+      {path: 'classificator/:classificator/root/:rootCode/child/:childCode', component: ClassificatorPageComponent}
     ])
   ],
   providers: [ClassificatorService, EventService, {provide: LocationStrategy, useClass: HashLocationStrategy}],

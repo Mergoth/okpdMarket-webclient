@@ -1,0 +1,32 @@
+@import '../../variables';
+
+.search-component {
+  padding: 10px 0 0 10px;
+  background-color: $second;
+  margin-bottom: 10px;
+
+  .nav-item {
+    .nav-link.active {
+      background-color: $second;
+    }
+    .classificator.active {
+      color: $fourth !important;
+    }
+    .classificator {
+      color: $third;
+    }
+  }
+
+  .search-content {
+    padding: 30px 10px 10px 10px;
+  }
+
+  .toggle-visibility-button {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+}
+
+

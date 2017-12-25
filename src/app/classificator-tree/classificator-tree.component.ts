@@ -30,7 +30,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
       Actions.CLASSIFICATOR_SELECTED,
       (data: ChangedUrl) => {
         this.classificatorCode = data.classificator;
-        this.loadTreeData(data.parentCode, data.childCode, true);
+        this.loadTreeData(data.parentCode, data.childCode, true, true);
       }
     );
 
@@ -71,7 +71,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
     this.highLevelParents = _.slice(this.highLevelParents, 0, index + 1);
   }
 
-  private loadTreeData(parentCode?: string, childCode?: string, withBreadCrumps: Boolean = false) {
+  private loadTreeData(parentCode?: string, childCode?: string, withBreadCrumps: Boolean = false, withScrollToTree: Boolean = false) {
     if (parentCode) {
       this.service.getElement(this.classificatorCode, parentCode)
         .subscribe(
@@ -89,9 +89,13 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
                 withDetailInfo: child.code === childCode,
                 path: child.path,
                 parent: element,
+                parentCode: child.parentCode,
                 links: child.links
               };
             });
+
+            if (withScrollToTree)
+              document.getElementById('classificators').scrollIntoView({block: 'start', behavior: 'smooth'});
           }
         );
     } else {
@@ -107,6 +111,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
             level: 0,
             expanded: false,
             hasChildren: it.hasChildren,
+            parentCode: it.parentCode,
             withDetailInfo: false,
             path: [],
             links: it.links
@@ -115,6 +120,8 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
         .toArray()
         .subscribe(elements => {
           this.elements = elements;
+          if (withScrollToTree)
+            document.getElementById('classificators').scrollIntoView({block: 'end', behavior: 'smooth'});
         });
     }
   }

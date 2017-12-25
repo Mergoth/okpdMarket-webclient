@@ -1,0 +1,39 @@
+<div class="search-component">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a [ngClass]="{
+    'classificator': true,
+    'nav-link': true,
+    'active': activeTab == SEARCH_BY_TEXT_TAB
+    }"
+         (click)="moveToSearchByText($event)"
+         href="#">Полнотекстовый поиск
+      </a>
+    </li>
+    <li class="nav-item">
+      <a [ngClass]="{
+    'classificator': true,
+    'nav-link': true,
+    'active': activeTab == SEARCH_BY_CODE_TAB
+    }"
+         (click)="moveToSearchByCode($event)"
+         href="#">Поиск по коду
+      </a>
+    </li>
+  </ul>
+  <div class="search-content"
+       [@shown]="shown">
+    <clsf-search-by-text *ngIf="activeTab == SEARCH_BY_TEXT_TAB">
+
+    </clsf-search-by-text>
+  </div>
+  <div style="text-align: center">
+    <button type="button"
+            class="toggle-visibility-button"
+            aria-label="Left Align"
+            (click)="toggleVisibility()">
+      <span *ngIf="shown" class="fa fa-chevron-up"></span>
+      <span *ngIf="!shown" class="fa fa-chevron-down"></span>
+    </button>
+  </div>
+</div>

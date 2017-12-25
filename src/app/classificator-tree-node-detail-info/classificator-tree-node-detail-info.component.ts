@@ -27,13 +27,15 @@ export class ClassificatorTreeNodeDetailInfoComponent implements OnInit {
       code: this.element.code,
       name: this.element.name,
       description: '',
-      links: Object.keys(this.element.links).map(
-        linkCategory => {
-          return {
-            name: linkCategory,
-            links: this.element.links[linkCategory]
-          };
-        })
+      links: this.element.links
+        ? Object.keys(this.element.links).map(
+          linkCategory => {
+            return {
+              name: linkCategory,
+              links: this.element.links[linkCategory]
+            };
+          })
+        : []
     };
   }
 

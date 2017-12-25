@@ -10,7 +10,6 @@ import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import {Observable} from 'rxjs/Observable';
 import {ElementDetailInfo} from '../model/ElementDetailInfo';
-import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
 @Component({
@@ -37,7 +36,6 @@ export class ClassificatorTreeNodeComponent implements OnInit {
 
   constructor(private classificatorService: ClassificatorService,
               private eventService: EventService,
-              private activatedRoute: ActivatedRoute,
               private location: Location) {
   }
 
@@ -66,6 +64,7 @@ export class ClassificatorTreeNodeComponent implements OnInit {
             expanded: false,
             hasChildren: element.hasChildren,
             parent: this.element,
+            parentCode: element.parentCode,
             withDetailInfo: false,
             links: element.links,
             path: element.path

@@ -26,4 +26,8 @@ export class ClassificatorService {
   getElement(classificatorCode: string, code: string): Observable<Element> {
     return this.httpClient.get<Element>(`classificators/${classificatorCode}/${code}`);
   }
+
+  searchElements(classificatorCode: string, query: string, page: number): Observable<Element[]> {
+    return this.httpClient.get<Element[]>(`classificators/${classificatorCode}/search?query=${query}&page=${page}`);
+  }
 }

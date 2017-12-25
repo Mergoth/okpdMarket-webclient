@@ -1,6 +1,6 @@
 {
   "/": {
-    "target": "http://localhost:9010/",
+    "target": "http://okpdstack-external-mo8gvwk07mlk-1957184390.us-east-1.elb.amazonaws.com/",
     "secure": false
   }
 }

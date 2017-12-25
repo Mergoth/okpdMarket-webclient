@@ -6,6 +6,7 @@ export interface Element {
   name: string;
   level: number;
   parent?: Element;
+  parentCode: string,
   hasChildren: boolean;
   expanded?: boolean;
   children?: Element[];
