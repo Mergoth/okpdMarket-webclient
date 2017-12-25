@@ -53,6 +53,11 @@ export class SearchByTextComponent implements OnInit {
     this.activeClassificatorCode = value;
   }
 
+  searchKeyDown(keyCode) {
+    if (keyCode === 13)
+      this.search();
+  }
+
   showInTree(parentCode: string,
              code: string,
              classificatorCode: string,
