@@ -1,4 +1,7 @@
 <div id="content">
+  <div *ngIf="loading" class="block">
+    <span class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom"></span>
+  </div>
   <div aria-label="breadcrumb" role="navigation">
     <ol class="breadcrumb">
       <li class="breadcrumb-item" *ngFor="let node of highLevelParents">

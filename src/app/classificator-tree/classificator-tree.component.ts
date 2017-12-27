@@ -15,6 +15,7 @@ import 'rxjs/add/operator/do';
 })
 export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   static MAX_NESTING_LEVEL = 4;
+  loading: boolean = false;
 
   @Input() classificatorCode: string;
   highLevelParents: ElementShortInfo[];
@@ -72,6 +73,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   }
 
   private loadTreeData(parentCode?: string, childCode?: string, withBreadCrumps: Boolean = false, withScrollToTree: Boolean = false) {
+    this.loading = true;
     if (parentCode) {
       this.service.getElement(this.classificatorCode, parentCode)
         .subscribe(
@@ -96,6 +98,8 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
 
             if (withScrollToTree)
               document.getElementById('classificators').scrollIntoView({block: 'start', behavior: 'smooth'});
+
+            this.loading = false;
           }
         );
     } else {
@@ -122,6 +126,7 @@ export class ClassificatorTreeComponent implements OnInit, OnDestroy {
           this.elements = elements;
           if (withScrollToTree)
             document.getElementById('classificators').scrollIntoView({block: 'end', behavior: 'smooth'});
+          this.loading = false;
         });
     }
   }
