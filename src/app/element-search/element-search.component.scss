@@ -5,16 +5,10 @@
   background-color: $second;
   margin-bottom: 10px;
 
-  .nav-item {
-    .nav-link.active {
-      background-color: $second;
-    }
-    .classificator.active {
-      color: $fourth !important;
-    }
-    .classificator {
-      color: $third;
-    }
+  .search-label {
+    padding-left: 15px;
+    color: $tableHeaderColor;
+    margin-bottom: 0;
   }
 
   .search-content {

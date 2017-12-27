@@ -15,33 +15,16 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
         'padding-top': 0
       })),
       transition('* => *', animate('.2s')),
-      // transition('false => true', animate('.4s'))
     ])
   ]
 })
 export class ElementSearchComponent implements OnInit {
-  SEARCH_BY_TEXT_TAB = 'search-by-text';
-  SEARCH_BY_CODE_TAB = 'search-by-code';
-
-  activeTab: string = this.SEARCH_BY_TEXT_TAB;
-
   shown = true;
 
   constructor() {
   }
 
   ngOnInit() {
-  }
-
-
-  moveToSearchByCode($event: Event) {
-    $event.preventDefault();
-    this.activeTab = this.SEARCH_BY_CODE_TAB;
-  }
-
-  moveToSearchByText($event: Event) {
-    $event.preventDefault();
-    this.activeTab = this.SEARCH_BY_TEXT_TAB;
   }
 
   toggleVisibility() {
