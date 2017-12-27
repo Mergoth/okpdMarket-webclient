@@ -15,7 +15,6 @@ import {RouterModule} from '@angular/router';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { ElementSearchComponent } from './element-search/element-search.component';
 import { ClassificatorPageComponent } from './classificator-page/classificator-page.component';
-import { SearchByTextComponent } from './search-by-text/search-by-text.component';
 
 
 @NgModule({
@@ -26,8 +25,7 @@ import { SearchByTextComponent } from './search-by-text/search-by-text.component
     ClassificatorTreeNodeDetailInfoComponent,
     ClassificatorsComponent,
     ElementSearchComponent,
-    ClassificatorPageComponent,
-    SearchByTextComponent
+    ClassificatorPageComponent
   ],
   imports: [
     BrowserModule,

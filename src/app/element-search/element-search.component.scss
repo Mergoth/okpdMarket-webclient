@@ -13,6 +13,42 @@
 
   .search-content {
     padding: 30px 10px 10px 10px;
+
+    .search-form {
+      .search-input {
+        width: 400px;
+      }
+
+      .form-control {
+        margin-right: 10px;
+      }
+    }
+
+    .search-result {
+      margin-top: 25px;
+      padding-left: 0;
+
+      table {
+        width: 100%;
+
+        th, td {
+          border-bottom: 1px solid $backColor;
+        }
+
+
+        th {
+          color: $tableHeaderColor;
+        }
+
+        td a {
+          color: $fourth;
+        }
+
+        .show-in-tree-column {
+          width: 170px;
+        }
+      }
+    }
   }
 
   .toggle-visibility-button {
