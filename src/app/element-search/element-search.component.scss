@@ -28,6 +28,11 @@
       margin-top: 25px;
       padding-left: 0;
 
+      .loading-label {
+        color: $backColor;
+        margin-left: 10px;
+      }
+
       table {
         width: 100%;
 

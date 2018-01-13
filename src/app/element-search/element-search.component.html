@@ -12,14 +12,17 @@
       <button class="btn btn-info" (click)="search()">Search</button>
     </div>
     <div class="search-result">
-      <table cellpadding="5px">
+      <h5 class="loading-label" *ngIf="loading">
+        Loading...
+      </h5>
+      <table *ngIf="!loading && !elementsHaveNotSearchedYet" cellpadding="5px">
         <thead>
         <th>Code</th>
         <th>Name</th>
         <th class="show-in-tree-column"></th>
         </thead>
         <tbody>
-        <tr *ngFor="let element of tableData | async">
+        <tr *ngFor="let element of tableData">
           <td>{{element.code}}</td>
           <td>{{element.name}}</td>
           <td>

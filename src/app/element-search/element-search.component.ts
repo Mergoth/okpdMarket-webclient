@@ -29,9 +29,12 @@ import {ChangedUrl} from '../model/ChangedUrl';
 export class ElementSearchComponent implements OnInit {
   shown = true;
 
+  elementsHaveNotSearchedYet = true;
+  loading = false;
+
   activeClassificatorCode: string;
   classificators: Classificator[];
-  tableData: Observable<Element[]>;
+  tableData: Element[];
 
   @ViewChild('searchInput') input: ElementRef;
 
@@ -55,17 +58,16 @@ export class ElementSearchComponent implements OnInit {
   }
 
   search() {
-    this.tableData = this.classificatorService.searchElements(
+    this.loading = true;
+    this.classificatorService.searchElements(
       this.activeClassificatorCode, this.input.nativeElement.value, 1
+    ).subscribe(
+      data => {
+        this.elementsHaveNotSearchedYet = false;
+        this.tableData = data;
+        this.loading = false;
+      }
     );
-
-    this.tableData
-      .mergeMap(it => it)
-      .subscribe(
-        data => {
-          console.log(data);
-        }
-      );
   }
 
   changeClassificator(value: string) {
