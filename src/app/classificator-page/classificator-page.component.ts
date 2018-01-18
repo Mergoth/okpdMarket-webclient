@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./classificator-page.component.scss']
 })
 export class ClassificatorPageComponent implements OnInit {
-
+  param = {value: 'world'};
   constructor() { }
 
   ngOnInit() {

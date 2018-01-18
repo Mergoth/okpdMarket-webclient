@@ -15,6 +15,9 @@ import {RouterModule} from '@angular/router';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import { ElementSearchComponent } from './element-search/element-search.component';
 import { ClassificatorPageComponent } from './classificator-page/classificator-page.component';
+import {TranslateLoader, TranslateModule, TranslateStaticLoader} from "ng2-translate";
+import {Http} from '@angular/http';
+
 
 
 @NgModule({
@@ -31,6 +34,11 @@ import { ClassificatorPageComponent } from './classificator-page/classificator-p
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      provide: TranslateLoader,
+      useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
+      deps: [Http]
+    }),
     RouterModule.forRoot([
       {path: '', component: ClassificatorPageComponent},
       {path: 'classificator/:classificator', component: ClassificatorPageComponent},

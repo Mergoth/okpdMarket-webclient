@@ -10,17 +10,17 @@
   'col-md-12': detailInfo.links.length == 0
   }">
     <div>
-      <span class="label">Code:</span>
+      <span class="label">{{"element_detail_info.code_field" | translate}}:</span>
       <span class="code">{{detailInfo.code}}</span>
     </div>
     <div>
-      <span class="label">Name:</span>
+      <span class="label">{{"element_detail_info.name_field" | translate}}:</span>
       <span class="name">{{detailInfo.name}}</span>
     </div>
   </div>
 
   <div *ngIf="detailInfo.links.length > 0" class="links col-md-6">
-    <span class="label">Links:</span>
+    <span class="label">{{"element_detail_info.links" | translate}}:</span>
     <div>
       <div class="category-links">
         <div *ngFor="let linkCategory of detailInfo.links">

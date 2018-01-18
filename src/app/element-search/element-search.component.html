@@ -1,5 +1,5 @@
 <div class="search-component">
-  <h5 class="search-label">Полнотекстовый поиск</h5>
+  <h5 class="search-label">{{"element_search.full_text_search" | translate}}</h5>
   <div class="search-content"
        [@shown]="shown">
     <div class="search-form form-inline">
@@ -9,16 +9,16 @@
           {{classificator.name}}
         </option>
       </select>
-      <button class="btn btn-info" (click)="search()">Search</button>
+      <button class="btn btn-info" (click)="search()">{{"element_search.search" | translate}}</button>
     </div>
     <div class="search-result">
       <h5 class="loading-label" *ngIf="loading">
-        Loading...
+        {{"loading_with_ellipsis" | translate}}
       </h5>
       <table *ngIf="!loading && !elementsHaveNotSearchedYet" cellpadding="5px">
         <thead>
-        <th>Code</th>
-        <th>Name</th>
+        <th>{{"element_search.code_column" | translate}}</th>
+        <th>{{"element_search.name_column" | translate}}</th>
         <th class="show-in-tree-column"></th>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
           <td>{{element.name}}</td>
           <td>
             <a href="#" (click)="showInTree(element.parentCode, element.code, activeClassificatorCode, $event)">
-              Показать в дереве
+              {{"show_in_tree" | translate}}
             </a>
           </td>
         </tr>

@@ -19,11 +19,11 @@
         <span>{{element.name}}</span>
         <button *ngIf="!element.withDetailInfo" type="button" class="btn btn-info btn-details"
                 (click)="showDetailInfo($event)">
-          Show Info
+          {{"tree.show_info" | translate}}
         </button>
         <button *ngIf="element.withDetailInfo" type="button" class="btn btn-info btn-details"
                 (click)="closeDetailInfo($event)">
-          Close Info
+          {{"tree.close_info" | translate}}
         </button>
       </div>
       <clsf-tree-node-detail-info [element]="element"
