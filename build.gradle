@@ -1,3 +1,8 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
 // frontend build.gradle
 // Deatils read here: https://github.com/srs/gradle-node-plugin/blob/master/docs/node.md
 
