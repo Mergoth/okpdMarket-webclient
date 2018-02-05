@@ -1,3 +1,24 @@
+- sudo apt-get update
+- sudo apt-get install nodejs
+- sudo apt-get install npm
+- npm install -g @angular/cli
+
+
+
+## Environment settings:
+/src/environments/
+      environment.prod.ts - production environment
+      environment.ts      - test & dev environment
+      
+```   
+   {
+      serverUrl: "http://localhost:8080" 
+   }
+```      
+
+ng build --env=prod
+
+
 # OkpdMarketFrontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.2.
