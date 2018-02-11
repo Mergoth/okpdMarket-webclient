@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Install started on `date`
+      - npm install -g @angular/cli
+  pre_build:
+    commands:
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - ng build --env=prod
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist/
+  discard-paths: yes
+cache:
+  paths:
+    - 'node_modules/**/*'

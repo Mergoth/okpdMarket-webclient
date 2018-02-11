@@ -1,3 +1,6 @@
+ <img src="https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiVHN1Y1FjTEppdGNYSnRDWTJIMVk5SEJGU2pvWnlXRHJuVDdsMkl4V29jRWJUU0xhMHZPSVliL0pMQmJVNUdLV1YraXVzbXE4OHhYWUJtZEdPWlhLYzFFPSIsIml2UGFyYW1ldGVyU3BlYyI6Im9STVZSWjBJbzdkOFY1ajUiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=develop"/>
+------
+
 - sudo apt-get update
 - sudo apt-get install nodejs
 - sudo apt-get install npm
