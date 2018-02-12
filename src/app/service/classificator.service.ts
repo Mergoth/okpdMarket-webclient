@@ -14,6 +14,7 @@ export class ClassificatorService {
   }
 
   getClassificators(): Observable<Classificator[]> {
+    console.log("get classificators");
     return this.httpClient.get<Classificator[]>(`classificators`);
   }
 

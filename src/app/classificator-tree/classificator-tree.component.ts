@@ -15,7 +15,7 @@ import 'rxjs/add/operator/do';
 })
 export class ClassificatorTreeComponent implements OnInit, OnDestroy {
   static MAX_NESTING_LEVEL = 4;
-  loading: boolean = false;
+  loading = false;
 
   @Input() classificatorCode: string;
   highLevelParents: ElementShortInfo[];

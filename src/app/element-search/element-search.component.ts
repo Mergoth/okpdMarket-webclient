@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Location} from '@angular/common';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Element} from '../model/Element';
@@ -31,9 +31,10 @@ export class ElementSearchComponent implements OnInit {
 
   elementsHaveNotSearchedYet = true;
   loading = false;
+  noClassificators = false;
 
   activeClassificatorCode: string;
-  classificators: Classificator[];
+  @Input() classificators: Observable<Classificator[]>;
   tableData: Element[];
 
   @ViewChild('searchInput') input: ElementRef;
@@ -44,11 +45,12 @@ export class ElementSearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.classificatorService.getClassificators().subscribe(
+    this.classificators.subscribe(
       classificators => {
-        this.classificators = classificators;
         if (classificators.length > 0)
           this.activeClassificatorCode = classificators[0].code;
+        else
+          this.noClassificators = true;
       }
     );
   }

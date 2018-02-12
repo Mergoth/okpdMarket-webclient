@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ClassificatorService} from '../service/classificator.service';
+import {Classificator} from '../model/Classificator';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/publishReplay';
 
 @Component({
   selector: 'clsf-classificator-page',
@@ -6,10 +10,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./classificator-page.component.scss']
 })
 export class ClassificatorPageComponent implements OnInit {
-  param = {value: 'world'};
-  constructor() { }
+  classificators: Observable<Classificator[]>;
 
-  ngOnInit() {
+  constructor(private classificatorService: ClassificatorService) {
   }
 
+  ngOnInit() {
+    this.classificators = this.classificatorService.getClassificators()
+      .publishReplay(1)
+      .refCount();
+  }
 }
