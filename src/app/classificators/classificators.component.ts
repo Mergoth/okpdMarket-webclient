@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ClassificatorService} from '../service/classificator.service';
+import {Component, Input, OnInit} from '@angular/core';
 import {Classificator} from '../model/Classificator';
 import {EventService} from '../service/event.service';
 import {Actions} from '../service/Actions';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {ChangedUrl} from '../model/ChangedUrl';
+import {Observable} from 'rxjs/Observable';
 
 
 @Component({
@@ -14,20 +14,18 @@ import {ChangedUrl} from '../model/ChangedUrl';
   styleUrls: ['./classificators.component.scss']
 })
 export class ClassificatorsComponent implements OnInit {
-  classificators: Classificator[];
+  @Input() classificators: Observable<Classificator[]>;
   activeClassificatorCode = '';
 
-  constructor(private classificatorService: ClassificatorService,
-              private eventService: EventService,
+  constructor(private eventService: EventService,
               private activatedRoute: ActivatedRoute,
               private location: Location) {
   }
 
   ngOnInit() {
-    this.classificatorService.getClassificators().subscribe(
+    this.classificators.subscribe(
       classificators => {
         const classificatorCodeFromUrl = this.activatedRoute.snapshot.params['classificator'];
-        this.classificators = classificators;
 
         if (classificators.length > 0) {
           if (classificatorCodeFromUrl == null) {

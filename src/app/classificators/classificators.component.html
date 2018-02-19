@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs" id="classificators">
-  <li *ngFor="let classificator of classificators" class="nav-item">
+  <li *ngFor="let classificator of classificators | async" class="nav-item">
     <a [ngClass]="{
     'classificator': true,
     'nav-link': true,

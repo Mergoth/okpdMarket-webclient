@@ -5,7 +5,7 @@
     <div class="search-form form-inline">
       <input #searchInput class="search-input form-control" (keydown)="searchKeyDown($event.keyCode)"/>
       <select class="form-control" (change)="changeClassificator($event.target.value)">
-        <option *ngFor="let classificator of classificators" value="{{classificator.code}}">
+        <option *ngFor="let classificator of classificators | async" value="{{classificator.code}}">
           {{classificator.name}}
         </option>
       </select>
