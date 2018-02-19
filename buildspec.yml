@@ -12,6 +12,9 @@ phases:
     commands:
       - echo Build started on `date`
       - ng build --env=prod
+  post_build:
+    commands:
+      - aws s3 cp --recursive --acl public-read ./webclient s3://okpd-market-webapp-s3/
 artifacts:
   files:
     - '**/*'
